@@ -9,9 +9,6 @@ const { Configuration, OpenAIApi } = require("openai");
 import Modal from 'react-modal';
 import Card from './Card'
 
-// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
-// Modal.setAppElement('#yourAppElement');
-
 const customStyles = {
   content: {
     top: '50%',
@@ -145,9 +142,7 @@ const Dashboard = ({ logout, privateKey, smartAccount, account }) => {
       const opena = new OpenAIApi(configuration);
       const response = await opena.createCompletion({
         model: "text-davinci-003",
-        prompt: `read the note written by a female employee of a company: "${note}". Act as her friend and help her in making her good mind. 
-
-        Make the answer sound more natural like a real person, your name is Shakti and be her friend. Also, write your message in a very easy to read manner. Reply in about 500 words.`,
+        prompt: `read the note written by a female employee of a company: "${note}" + classify it to one of the categories of workplace harassment  as given under the POSH law of 2013, India, "The PoSH Act defines sexual harassment to include unwelcome acts such as physical contact and sexual advances, a demand or request for sexual favours, making sexually coloured remarks, showing pornography, and any other unwelcome physical, verbal, or non-verbal conduct of a sexual nature. It also lists down five circumstances that would constitute sexual harassment if they are connected to the above-mentioned acts- (i) Implied or explicit promise of preferential treatment in employment (ii) Implied or explicit threat of detrimental treatment in employment (iii) Implied or explicit threat about present or future employment status (iv) Interference with work or creating an intimidating or offensive or hostile work environment and (v) Humiliating treatment likely to affect health or safety." +  identify the scale (mild, medium, high risk) to which it matches with categories identified for the note and the kind of help the employee can seek.`,
         temperature: 0,
         max_tokens: 2000,
       });
@@ -176,7 +171,6 @@ const Dashboard = ({ logout, privateKey, smartAccount, account }) => {
         <h1 className="text-xl font-bold mb-2">Hi 👋🏼, Create a new note:</h1>
         <textarea value={note} onChange={(e) => setNote(e.target.value)} placeholder="Hey, what happened? Feel free to share your experience." className="textarea textarea-bordered textarea-lg w-full max-w-xl" ></textarea>
         <button onClick={save} class="btn btn-secondary w-min mt-2">Save</button>
-        <button onClick={openModal} class="btn btn-secondary w-min mt-2">Open Modal</button>
       </div>
 
     </div>
@@ -194,8 +188,10 @@ const Dashboard = ({ logout, privateKey, smartAccount, account }) => {
       onRequestClose={closeModal}
       style={customStyles}
     >
-      <h2>From Shakti: ⚡️</h2>
-      <button onClick={closeModal}>close</button>
+      <div className="flex flex-row justify-between">
+        <h2 className="font-bold text-xl">From Shakti: ⚡️</h2>
+        <button onClick={closeModal}>X close</button>
+      </div>
       <p>
         {chatText ?? ''}
       </p>

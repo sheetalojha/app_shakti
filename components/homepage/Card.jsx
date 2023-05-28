@@ -118,7 +118,7 @@ const Card = ({ note, smartAccount, index }) => {
   }
 
   useEffect(() => {
-    // if (note.unencryptedContentCID != "") setIsPublic(true);
+    if (note.unencryptedContentCID != "") setIsPublic(true);
 
     decrypt(note.encryptedContentCID)
   }, [])
