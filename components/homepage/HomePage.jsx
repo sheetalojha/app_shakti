@@ -1,11 +1,13 @@
-import SocialLogin, { socialLoginSDK } from "@biconomy/web3-auth";
-// import "@biconomy/web3-auth/dist/src/style.css";
+import SocialLogin from "@biconomy/web3-auth";
+import "@biconomy/web3-auth/dist/src/style.css";
 
 import { ChainId } from "@biconomy/core-types";
 import SmartAccount from "@biconomy/smart-account";
 
 import { ethers } from 'ethers'
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import Dashboard from "./Dashboard";
 
 const HomePage = () => {
 
@@ -17,11 +19,6 @@ const HomePage = () => {
   const socialLogin = new SocialLogin()
 
   const checkLogin = async () => {
-    console.log('test2', socialLoginSDK.clientId)
-    await socialLogin.init({
-      chainId: '0x13881',
-      network: 'testnet'
-    })
 
     if (!socialLogin?.provider) return;
     // create a provider from the social login provider that 
@@ -31,9 +28,8 @@ const HomePage = () => {
     );
     // get list of accounts available with the provider
     const accounts = await provider.listAccounts();
-    console.log(accounts.length, accounts)
+    if (accounts.length == 0) return;
 
-    
     // Initialize the Smart Account
     // All values are optional except networkConfig only in the case of gasless dappAPIKey is required
     let options = {
@@ -61,15 +57,20 @@ const HomePage = () => {
     setLoading(false)
   }
 
-  useEffect(() => {
+  const initSocial = async () => {
+    await socialLogin.init({
+      chainId: '0x13881',
+      network: 'testnet'
+    })
+  }
 
-    setLoading(true)
-    checkLogin()
-  }, [account])
+  useEffect(() => {
+    initSocial()
+  }, [])
 
   const openSocialSignon = async () => {
-    // pops up the UI widget
-    await socialLogin.socialLogin('google')
+    if (!socialLogin?.provider)
+      await socialLogin.socialLogin('google')
 
     setLoading(true)
     checkLogin()
@@ -77,20 +78,28 @@ const HomePage = () => {
 
   const logout = async () => {
     await socialLogin.logout()
+
+    await initSocial()
     setAccount('')
     setSmartAccount()
-
+    setPrivateKey()
   }
 
-
-  if (!account)
+  if (loading)
     return <>
-      <div onClick={openSocialSignon}>Sign In</div>
+      <Image src={'/assets/shakti.png'} height={100} width={100} />
+      <h3>Loading Shakti...</h3>
     </>
 
-  return <>
-    <p onClick={logout}>hi</p>
-  </>
+
+  if (account == '')
+    return <>
+      <Image src={'/assets/shakti.png'} height={100} width={100} />
+      <h3 className="mb-2 font-bold text-2xl">Hi, I am Shakti ⚡️</h3>
+      <div className="btn btn-active btn-secondary" onClick={openSocialSignon}>Sign In</div>
+    </>
+
+  return <Dashboard account={account} privateKey={privateKey} smartAccount={smartAccount} logout={logout} />
 }
 
 export default HomePage

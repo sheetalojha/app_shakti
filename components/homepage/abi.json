@@ -1,0 +1,193 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "encryptedContentCID",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "hashOfOriginalNote",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "unencryptedContentCID",
+            "type": "string"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Note",
+        "name": "note",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "NewNote",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "encryptedContentCID",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "hashOfOriginalNote",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "unencryptedContentCID",
+            "type": "string"
+          }
+        ],
+        "indexed": false,
+        "internalType": "struct Note",
+        "name": "note",
+        "type": "tuple"
+      },
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "sender",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "PublicNote",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "encryptedContentCID",
+        "type": "string"
+      },
+      {
+        "internalType": "string",
+        "name": "hashOfOriginalNote",
+        "type": "string"
+      }
+    ],
+    "name": "createNote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNote",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "encryptedContentCID",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "hashOfOriginalNote",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "unencryptedContentCID",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Note",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getNotes",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "string",
+            "name": "encryptedContentCID",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "hashOfOriginalNote",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "unencryptedContentCID",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct Note[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "index",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string",
+        "name": "unencryptedContentCID",
+        "type": "string"
+      }
+    ],
+    "name": "makeNotePublic",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
+]
